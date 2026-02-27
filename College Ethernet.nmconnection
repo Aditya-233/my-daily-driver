@@ -1,0 +1,23 @@
+[connection]
+id=College Ethernet
+uuid=133ac22c-9591-3526-94cd-4c4d95b47d39
+type=ethernet
+autoconnect-priority=-999
+interface-name=enp0s20f0u1
+
+[ethernet]
+
+[802-1x]
+eap=peap;
+identity=24135005
+password=020620060
+phase2-auth=mschapv2
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto
+
+[proxy]
