@@ -1,0 +1,14 @@
+[
+    {
+        "context": "Workspace",
+        "bindings": {
+            "ctrl-b": "workspace::ToggleRightDock",
+            "ctrl-alt-b": "workspace::ToggleLeftDock",
+            "ctrl-shift-d": [
+                "pane::CloseActiveItem",
+                { "close_pinned": false },
+            ],
+            "ctrl-shift-f12": ["task::Spawn", { "task_name": "Code Runner" }],
+        },
+    },
+]

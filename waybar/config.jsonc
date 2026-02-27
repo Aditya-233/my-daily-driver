@@ -1,0 +1,47 @@
+{
+    "reload_style_on_change": true,
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["bluetooth", "network", "battery"],
+
+    "sway/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "active": "",
+            "default": "",
+        },
+        "persistent-workspaces": {
+            "*": [1, 2, 3, 4, 5],
+        },
+    },
+
+    "clock": {
+        "format": " {:%H:%M}",
+        "tooltip-format": "{:%Y-%m-%d}",
+    },
+
+    "bluetooth": {
+        "format": " BT",
+        "format-connected": " Connected",
+        "on-click": "adw-bluetooth",
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "bash -lc 'cur=$(powerprofilesctl get); p=$(printf \"performance\\nbalanced\\npower-saver\\n\" | rofi -dmenu -i -no-custom -select \"$cur\" -p \"Power profile…\" -theme ~/.config/rofi/config.rasi); [ -n \"$p\" ] && powerprofilesctl set \"$p\"'",
+    },
+    "network": {
+        "format-wifi": " Online",
+        "format-ethernet": "󰀂 Online",
+        "format-disconnected": "⚠ Disconnected",
+        "on-click": "nmrs",
+    },
+}

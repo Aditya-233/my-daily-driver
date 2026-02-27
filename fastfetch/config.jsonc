@@ -1,0 +1,51 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "padding": {
+            "top": 1,
+            "right": 18,
+            "left": 5
+        }
+    },
+    "display": {
+        "separator": "  ",
+        "color": "37"
+    },
+    "modules": [
+        "break",
+        "break",
+        {
+            "type": "title",
+            "color": { "user": "35", "at": "37", "host": "35" }
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[38;2;69;71;90m──────────────────────────────────────────"
+        },
+
+        { "type": "host", "key": " ", "keyColor": "32" },
+        { "type": "cpu", "key": " ", "keyColor": "32" },
+        { "type": "gpu", "key": " ", "keyColor": "32" },
+        { "type": "memory", "key": " ", "keyColor": "32" },
+
+        "break",
+
+        { "type": "os", "key": " ", "keyColor": "34" },
+        { "type": "kernel", "key": " ", "keyColor": "34" },
+        { "type": "shell", "key": " ", "keyColor": "34" },
+        { "type": "wm", "key": " ", "keyColor": "34" },
+
+        "break",
+
+        { "type": "uptime", "key": "󱫐 ", "keyColor": "35" },
+        { "type": "packages", "key": " ", "keyColor": "35" },
+        { "type": "battery", "key": "󰁹 ", "keyColor": "35" },
+        { "type": "disk", "key": "󰋊 ", "keyColor": "35" },
+
+        {
+            "type": "custom",
+            "format": "\u001b[38;2;69;71;90m──────────────────────────────────────────"
+        },
+        { "type": "colors", "symbol": "circle", "paddingLeft": 12 }
+    ]
+}

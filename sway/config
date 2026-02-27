@@ -1,0 +1,138 @@
+########################################
+# VARIABLES & PATHS
+########################################
+set $mod Mod4
+set $term foot
+set $menu rofi -show drun -theme ~/.config/rofi/config.rasi
+set $browser firefox
+set $notify notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -t 800
+
+########################################
+# MONITORS
+########################################
+# Run 'swaymsg -t get_outputs' to get your specific name if 'output *' is too broad
+output * res 1920x1200@60Hz
+
+########################################
+# ENVIRONMENT & PORTALS
+########################################
+# Required for GTK themes, screen sharing, and xdg-desktop-portal
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+########################################
+# AUTOSTART
+########################################
+exec mako
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+exec /usr/local/bin/power-profile.sh
+exec swaybg -i ~/.config/sway/current_wallpaper -m fill
+
+########################################
+# INPUT CONFIGURATION
+########################################
+input "type:keyboard" {
+    xkb_options caps:escape
+    repeat_rate 35
+    repeat_delay 300
+}
+
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+}
+
+# Mouse cursor timeout (replaces Hyprland's cursor:inactive_timeout)
+seat * cursor_inactive 3000
+
+########################################
+# GENERAL LOOK & FEEL
+########################################
+default_border pixel 0
+gaps inner 0
+gaps outer 0
+smart_borders on
+
+xwayland disable
+
+########################################
+# WINDOW RULES (Criteria)
+########################################
+# Floating rules
+for_window [class="imv"] floating enable, resize set 900 500, move position center
+for_window [app_id="org.netrs.ui"] floating enable, resize set 640 480, move position center
+for_window [class="com.ezratweaver.AdwBluetooth"] floating enable, resize set 640 480, move position center
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable, resize set 900 500, move position center
+for_window [class="polkit-gnome-authentication-agent-1"] floating enable, move position center
+
+# Fullscreen
+for_window [app_id="dev.zed.Zed"] fullscreen enable
+for_window [class="mpv"] fullscreen enable
+
+########################################
+# KEYBINDINGS
+########################################
+# Basics
+bindsym $mod+w kill
+bindsym $mod+Return exec $term
+bindsym $mod+b exec $browser
+bindsym $mod+z exec zeditor
+bindsym $mod+f exec thunar -w
+bindsym $mod+Space exec $menu
+bindsym $mod+v exec cliphist list | rofi -dmenu -display-columns 2 -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
+bindsym $mod+Ctrl+Space exec ~/.config/sway/scripts/wallpaper-change.sh
+bindsym $mod+Shift+Space exec ~/.config/sway/scripts/toggle-waybar.sh
+bindsym $mod+Escape exec ~/.config/rofi/powermenu.sh
+
+# Workspaces 1-10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+
+# Move to Workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+
+bindsym $mod+Tab workspace next_on_output
+bindsym $mod+Shift+Tab workspace prev_on_output
+bindsym Mod1+Tab focus next
+
+########################################
+# MEDIA KEYS (Wireplumber & Brightness)
+########################################
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && $notify "Volume: $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' | cut -d. -f1)%"
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && $notify "Volume: $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' | cut -d. -f1)%"
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && $notify "Muted"
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set +5% && $notify "Brightness: $(brightnessctl info | grep -oP '\(\K[^%]+')%"
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && $notify "Brightness: $(brightnessctl info | grep -oP '\(\K[^%]+')%"
+bindsym --locked Mod1+XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+ && $notify "Volume: $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' | cut -d. -f1)%"
+bindsym --locked Mod1+XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%- && $notify "Volume: $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' | cut -d. -f1)%"
+bindsym --locked Mod1+XF86MonBrightnessUp exec brightnessctl set +1% && $notify "Brightness: $(brightnessctl info | grep -oP '\(\K[^%]+')%"
+bindsym --locked Mod1+XF86MonBrightnessDown exec brightnessctl set 1%- && $notify "Brightness: $(brightnessctl info | grep -oP '\(\K[^%]+')%"
+
+########################################
+# SWAYBAR CONFIG (Uses Waybar)
+########################################
+bar {
+    swaybar_command waybar
+}
+
+# Reload/Exit
+bindsym $mod+Shift+r reload
