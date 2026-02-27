@@ -1,10 +1,34 @@
-All of my configs for plug and play use...
+# Arch Linux Hyprland Plug‑and‑Play Configuration
 
-1. Firefox -> add MOZ_ENABLE_WAYLAND=1
+This document lists required environment tweaks, setup commands, and installed packages used for a fully functional Hyprland Wayland setup.
 
-Also need to run for wallpaper script to work -> ln -sf ~/Pictures/Wallpapers/your_wallpaper.jpg ~/.config/sway/current_wallpaper
+---
 
-all packages
+## Environment Configuration
+
+### Firefox (Wayland Support)
+
+Enable native Wayland support:
+
+```bash
+MOZ_ENABLE_WAYLAND=1
+```
+
+---
+
+## Wallpaper Script Requirement
+
+Create a symlink so wallpaper scripts can reference the current wallpaper consistently:
+
+```bash
+ln -sf ~/Pictures/Wallpapers/your_wallpaper.jpg ~/.config/sway/current_wallpaper
+```
+
+---
+
+## Installed Packages
+
+```
 adw-bluetooth 1.0.0-1
 ani-cli 4.10-1
 base 3-3
@@ -55,7 +79,7 @@ nmrs 1.1.0-2
 pamixer 1.6-3
 pipewire 1:1.4.10-2
 pipewire-alsa 1:1.4.10-2
-pipewire-jack 1:1.4.10-2
+pipewire-pipewire-jack 1:1.4.10-2
 pipewire-pulse 1:1.4.10-2
 playerctl 2.4.1-5
 polkit-gnome 0.105-12
@@ -79,3 +103,13 @@ xdg-desktop-portal-hyprland 1.3.11-3
 yay 12.5.7-2
 zed 0.224.11-1
 zram-generator 1.2.1-1
+```
+
+---
+
+## Notes
+
+* Designed for a minimal Wayland-first workflow.
+* PipeWire is used for audio handling.
+* Hyprland acts as the primary compositor.
+* GTK theming uses Catppuccin Mocha.
