@@ -1,5 +1,5 @@
 [connection]
-id=College Ethernet
+id=college-ethernet
 uuid=133ac22c-9591-3526-94cd-4c4d95b47d39
 type=ethernet
 autoconnect-priority=-999
