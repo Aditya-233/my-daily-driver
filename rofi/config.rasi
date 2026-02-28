@@ -1,119 +1,80 @@
 configuration {
-    show-icons: true;
-
-    display-ssh:    "󰣀 ssh:";
-    display-run:    "󱓞 run:";
-    display-drun:   "󰣖 drun:";
-    display-window: "󱂬 window:";
-    display-combi:  "󰕘 combi:";
-    display-filebrowser: "󰉋 filebrowser:";
+    modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "";
+    drun-display-format:        "{name}";
+    font:                       "JetBrainsMono Nerd Font Propo 12";
 }
 
 * {
-    base: #1e1e2e;
-    surface0: #313244;
-    overlay0: #6c7086;
-    text: #cdd6f4;
+    /* Catppuccin Mocha */
+    bg-col:      #1e1e2e;
+    bg-sel:      #313244;
+    fg-col:      #cdd6f4;
+    accent:      #b4befe;
+    active-text: #f38ba8;
+    grey:        #6c7086;
 
-    mauve: #cba6f7;
-    red: #f38ba8;
-    peach: #fab387;
-    green: #a6e3a1;
-    lavender: #b4befe;
-
-    background-color: @base;
-    font: "JetBrainsMono Nerd Font Propo 11";
+    background-color: transparent;
+    text-color:       @fg-col;
 }
 
 window {
-    height: 400;
-    width: 640;
-    border: 3;
-    border-radius: 10;
-    border-color: @lavender;
+    width:            600px;
+    border:           2px;
+    border-color:     @accent;
+    border-radius:    12px;
+    background-color: @bg-col;
 }
 
 mainbox {
-    spacing: 0;
-    children: [inputbar, message, listview];
+    padding:          24px;
+    children:         [ inputbar, listview ];
 }
 
 inputbar {
-    color: @text;
-    padding: 14;
-    background-color: @base;
-}
-
-message {
-    padding: 10;
-    background-color: @overlay0;
-}
-
-listview {
-    padding: 8;
-    border-radius: 0 0 10 10;
-    border: 2 2 2 2;
-    border-color: @base;
-    background-color: @base;
-    dynamic: false;
-}
-
-textbox {
-    text-color: @text;
-    background-color: inherit;
-}
-
-error-message {
-    border: 20 20 20 20;
-}
-
-entry, prompt, case-indicator {
-    text-color: inherit;
+    padding:          0px 0px 20px 0px;
+    children:         [ prompt, entry ];
 }
 
 prompt {
-    margin: 0 10 0 0;
+    text-color:       @fg-col;
+    padding:          0px 10px 0px 5px;
+}
+
+entry {
+    placeholder:      "Search...";
+    placeholder-color: @grey;
+    text-color:       @fg-col;
+}
+
+listview {
+    columns:          1;
+    lines:            6;
+    fixed-height:     false;
+    dynamic:          true;
+    spacing:          4px;
 }
 
 element {
-    padding: 5;
-    vertical-align: 0.5;
-    border-radius: 10;
-    background-color: @surface0;
+    padding:          10px 12px;
+    border-radius:    8px;
 }
 
-element.selected.normal {
-    background-color: @overlay0;
+element-icon {
+    size:             24px;
+    margin:           0 15px 0 0;
 }
 
-element.alternate.normal {
-    background-color: inherit;
+element selected {
+    background-color: @bg-sel;
 }
 
-element.normal.active, element.alternate.active {
-    background-color: @peach;
+element-text selected {
+    text-color:       @active-text;
+    vertical-align:   0.5;
 }
 
-element.selected.active {
-    background-color: @green;
-}
-
-element.normal.urgent, element.alternate.urgent {
-    background-color: @red;
-}
-
-element.selected.urgent {
-    background-color: @mauve;
-}
-
-element-text, element-icon {
-    size: 40;
-    margin: 0 10 0 0;
-    vertical-align: 0.5;
-    background-color: inherit;
-    text-color: @text;
-}
-
-element-text .active, element-text .urgent {
-    text-color: @base;
+element-text {
+    vertical-align:   0.5;
 }
