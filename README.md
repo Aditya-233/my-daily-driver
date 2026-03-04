@@ -37,7 +37,6 @@ bluetui 0.8.1-1
 bluez 5.86-4
 bluez-utils 5.86-4
 brightnessctl 0.5.1-3
-btop 1.4.6-1
 cliphist 1:0.7.0-2
 dhcpcd 10.3.0-1
 efibootmgr 18-3
